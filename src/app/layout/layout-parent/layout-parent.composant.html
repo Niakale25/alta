@@ -1,0 +1,201 @@
+<div class="parent-shell" [class.parent-sidebar-collapsed]="!sidebarExpanded()">
+
+  <!-- ── Sidebar Parent ────────────────────────────────── -->
+  <aside class="parent-sidebar" [class.parent-sidebar--expanded]="sidebarExpanded()">
+
+    <!-- Logo -->
+    <div class="parent-sidebar__logo">
+      <div class="parent-logo-icon">
+        <svg width="30" height="30" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="10" fill="rgba(255,255,255,0.15)"/>
+          <path d="M8 26L18 10L28 26H8Z" fill="white" fill-opacity="0.95"/>
+          <circle cx="18" cy="20" r="4" fill="white" fill-opacity="0.65"/>
+        </svg>
+      </div>
+      @if (sidebarExpanded()) {
+        <div class="parent-logo-text">
+          <span class="parent-logo-name">Alternia</span>
+          <span class="parent-logo-sub">Espace Parent</span>
+        </div>
+      }
+      <button
+        class="parent-collapse-btn"
+        [class.parent-collapse-btn--collapsed]="!sidebarExpanded()"
+        (click)="basculerSidebar()"
+        [attr.aria-label]="sidebarExpanded() ? 'Réduire' : 'Développer'"
+        id="btn-toggle-parent-sidebar"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Status chip -->
+    @if (sidebarExpanded()) {
+      <div class="parent-sidebar__status">
+        <span class="parent-status-dot"></span>
+        <span>Boîtier connecté</span>
+      </div>
+    }
+
+    <!-- Navigation -->
+    <nav class="parent-sidebar__nav" aria-label="Navigation parent">
+      @for (item of navItems; track item.route) {
+        <a
+          [routerLink]="item.route"
+          routerLinkActive="parent-nav-item--active"
+          class="parent-nav-item"
+          [class.parent-nav-item--icon-only]="!sidebarExpanded()"
+          [attr.data-tooltip]="!sidebarExpanded() ? item.label : null"
+          [attr.id]="'nav-parent-' + item.icon"
+          [attr.aria-label]="item.label"
+        >
+          <span class="parent-nav-icon">
+            @switch (item.icon) {
+              @case ('home') {
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M2 7.5L9 2L16 7.5V16H11.5V11H6.5V16H2V7.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+              }
+              @case ('bot') {
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              }
+              @case ('calendar') {
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              }
+              @case ('activity') {
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <polyline points="1.5,10.5 4.5,7 7.5,11 11,5.5 14,8.5 16.5,6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+              }
+              @case ('book') {
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M3 3H10C11.657 3 13 4.343 13 6V15C13 15 11.657 14 10 14H3V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M13 6H15C15.552 6 16 6.448 16 7V15C16 15 14.657 14 13 14" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="M6 7H10M6 10H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              }
+              @case ('bell') {
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M9 2C6.239 2 4 4.239 4 7V12H14V7C14 4.239 11.761 2 9 2Z" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M4 12H14L15 14H3L4 12Z" fill="currentColor" fill-opacity="0.5"/>
+                  <path d="M7.5 15C7.5 16.105 8.12 17 9 17C9.88 17 10.5 16.105 10.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              }
+              @case ('cpu') {
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <rect x="5" y="5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M7 1V4M11 1V4M7 14V17M11 14V17M1 7H4M1 11H4M14 7H17M14 11H17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              }
+              @case ('settings') {
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <circle cx="9" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M9 2V4M9 14V16M2 9H4M14 9H16M3.757 3.757L5.172 5.172M12.828 12.828L14.243 14.243M3.757 14.243L5.172 12.828M12.828 5.172L14.243 3.757" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              }
+              @default {
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/>
+                </svg>
+              }
+            }
+          </span>
+          @if (sidebarExpanded()) {
+            <span class="parent-nav-label">{{ item.label }}</span>
+          }
+          @if (item.badge) {
+            <span class="parent-nav-badge" [class.parent-nav-badge--compact]="!sidebarExpanded()">
+              {{ item.badge }}
+            </span>
+          }
+        </a>
+      }
+    </nav>
+
+    <!-- Footer -->
+    <div class="parent-sidebar__footer">
+      <!-- Theme -->
+      <button
+        class="parent-theme-btn"
+        (click)="basculerTheme()"
+        [attr.data-tooltip]="!sidebarExpanded() ? (estModeNuit() ? 'Mode clair' : 'Mode nuit') : null"
+        id="btn-theme-parent"
+        [attr.aria-label]="estModeNuit() ? 'Passer en mode clair' : 'Passer en mode nuit'"
+      >
+        @if (estModeNuit()) {
+          <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="9" r="3.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M9 2V4M9 14V16M2 9H4M14 9H16M3.757 3.757L5.172 5.172M12.828 12.828L14.243 14.243M3.757 14.243L5.172 12.828M12.828 5.172L14.243 3.757" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        } @else {
+          <svg width="15" height="15" viewBox="0 0 18 18" fill="none">
+            <path d="M15 9.5C14.5 12.5 11.8 15 8.5 15C4.91 15 2 12.09 2 8.5C2 5.2 4.5 2.5 7.5 2C6.5 3.5 6 5 6 6.5C6 10.09 8.91 13 12.5 13C13.5 13 14.5 12.5 15 12C15.1 11 15 10.3 15 9.5Z" fill="currentColor" fill-opacity="0.9"/>
+          </svg>
+        }
+        @if (sidebarExpanded()) {
+          <span>{{ estModeNuit() ? 'Mode clair' : 'Mode nuit' }}</span>
+        }
+      </button>
+
+      <!-- User -->
+      <div class="parent-sidebar-user" [class.parent-sidebar-user--compact]="!sidebarExpanded()">
+        <div class="avatar avatar-sm avatar-secondaire">
+          {{ utilisateur()?.nomComplet?.charAt(0) ?? 'P' }}
+        </div>
+        @if (sidebarExpanded()) {
+          <div class="parent-sidebar-user__info">
+            <span class="parent-sidebar-user__name">{{ utilisateur()?.nomComplet }}</span>
+            <span class="parent-sidebar-user__role">Parent</span>
+          </div>
+          <button class="parent-sidebar-user__logout" (click)="seDeconnecter()" aria-label="Déconnexion" id="btn-deconnecter-parent">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M6 14H3C2.448 14 2 13.552 2 13V3C2 2.448 2.448 2 3 2H6M11 11L14 8L11 5M14 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        } @else {
+          <button class="parent-sidebar-user__logout-compact" (click)="seDeconnecter()" data-tooltip="Déconnexion" id="btn-deconnecter-parent-compact" aria-label="Déconnexion">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M6 14H3C2.448 14 2 13.552 2 13V3C2 2.448 2.448 2 3 2H6M11 11L14 8L11 5M14 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        }
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ───────────────────────────────────── -->
+  <div class="parent-main">
+    <!-- Top bar minimaliste -->
+    <header class="parent-topbar">
+      <div class="parent-topbar__left">
+        <div class="parent-topbar__greeting">
+          <span class="parent-topbar__welcome">Bonjour,</span>
+          <span class="parent-topbar__name">{{ (utilisateur()?.nomComplet ?? 'Parent').split(' ')[0] }}</span>
+        </div>
+      </div>
+      <div class="parent-topbar__right">
+        <div class="parent-user-pill">
+          <div class="avatar avatar-sm avatar-secondaire">
+            {{ utilisateur()?.nomComplet?.charAt(0) ?? 'P' }}
+          </div>
+          <span class="parent-user-pill__name">{{ utilisateur()?.nomComplet }}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="parent-content" id="parent-main-content">
+      <router-outlet/>
+    </main>
+  </div>
+
+</div>

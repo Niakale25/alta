@@ -1,0 +1,91 @@
+import { StatistiquesUtilisation, NotionDifficile, RapportActivite } from '../../domain/entites/statistiques-utilisation.entite';
+import { Matiere } from '../../core/enums';
+
+export const STATISTIQUES_MOCK: StatistiquesUtilisation = {
+  etablissementId: 'etab-1',
+  periode: 'mois',
+  totalQuestionsIA: 14_782,
+  tempsTotal: 89_640, // minutes
+  apprenantActifs: 342,
+  tauxEngagement: 78,
+  matieresPlusUtilisees: [
+    { matiere: Matiere.MATHEMATIQUES, pourcentage: 28, totalQuestions: 4139, tempsTotal: 25100 },
+    { matiere: Matiere.PHYSIQUE, pourcentage: 19, totalQuestions: 2809, tempsTotal: 17032 },
+    { matiere: Matiere.FRANCAIS, pourcentage: 16, totalQuestions: 2365, tempsTotal: 14342 },
+    { matiere: Matiere.SVT, pourcentage: 14, totalQuestions: 2069, tempsTotal: 12550 },
+    { matiere: Matiere.ECONOMIE, pourcentage: 10, totalQuestions: 1478, tempsTotal: 8964 },
+    { matiere: Matiere.CHIMIE, pourcentage: 8, totalQuestions: 1183, tempsTotal: 7171 },
+    { matiere: Matiere.HISTOIRE, pourcentage: 5, totalQuestions: 739, tempsTotal: 4481 },
+  ],
+  pictUtilisation: [
+    { heure: 7, nombreSessions: 45 },
+    { heure: 8, nombreSessions: 120 },
+    { heure: 9, nombreSessions: 310 },
+    { heure: 10, nombreSessions: 420 },
+    { heure: 11, nombreSessions: 380 },
+    { heure: 12, nombreSessions: 250 },
+    { heure: 13, nombreSessions: 190 },
+    { heure: 14, nombreSessions: 440 },
+    { heure: 15, nombreSessions: 480 },
+    { heure: 16, nombreSessions: 520 },
+    { heure: 17, nombreSessions: 490 },
+    { heure: 18, nombreSessions: 350 },
+    { heure: 19, nombreSessions: 280 },
+    { heure: 20, nombreSessions: 210 },
+    { heure: 21, nombreSessions: 130 },
+  ],
+  activiteJournaliere: [320, 410, 395, 465, 488, 342, 290],
+  activiteHebdomadaire: [1820, 2240, 2150, 2610, 2380, 1940, 2100, 2450],
+  evolutionMensuelle: [65, 70, 68, 74, 72, 78, 76, 80, 82, 79, 84, 87],
+  dateGeneration: new Date(),
+};
+
+export const NOTIONS_DIFFICILES_MOCK: NotionDifficile[] = [
+  { matiere: Matiere.MATHEMATIQUES, notion: 'Intégrales', tauxEchec: 68, nombreTentatives: 1240, apprenantsConcernes: 89 },
+  { matiere: Matiere.PHYSIQUE, notion: 'Électromagnétisme', tauxEchec: 62, nombreTentatives: 980, apprenantsConcernes: 74 },
+  { matiere: Matiere.CHIMIE, notion: 'Cinétique chimique', tauxEchec: 59, nombreTentatives: 720, apprenantsConcernes: 61 },
+  { matiere: Matiere.MATHEMATIQUES, notion: 'Probabilités conditionnelles', tauxEchec: 54, nombreTentatives: 860, apprenantsConcernes: 72 },
+  { matiere: Matiere.SVT, notion: 'Génétique moléculaire', tauxEchec: 48, nombreTentatives: 640, apprenantsConcernes: 55 },
+];
+
+export const RAPPORTS_MOCK: RapportActivite[] = [
+  {
+    id: 'rpt-1',
+    etablissementId: 'etab-1',
+    titre: 'Rapport mensuel – Juillet 2026',
+    periode: 'Juillet 2026',
+    dateDebut: new Date('2026-07-01'),
+    dateFin: new Date('2026-07-31'),
+    dateGeneration: new Date('2026-08-01'),
+    type: 'pdf',
+    statut: 'genere',
+    urlTelechargement: '#',
+    tailleFichier: 2840,
+  },
+  {
+    id: 'rpt-2',
+    etablissementId: 'etab-1',
+    titre: 'Rapport hebdomadaire – Semaine 31',
+    periode: 'Sem. 31 2026',
+    dateDebut: new Date('2026-07-28'),
+    dateFin: new Date('2026-08-03'),
+    dateGeneration: new Date('2026-08-04'),
+    type: 'excel',
+    statut: 'genere',
+    urlTelechargement: '#',
+    tailleFichier: 450,
+  },
+  {
+    id: 'rpt-3',
+    etablissementId: 'etab-1',
+    titre: 'Rapport trimestriel – T2 2026',
+    periode: 'T2 2026',
+    dateDebut: new Date('2026-04-01'),
+    dateFin: new Date('2026-06-30'),
+    dateGeneration: new Date('2026-07-02'),
+    type: 'pdf',
+    statut: 'genere',
+    urlTelechargement: '#',
+    tailleFichier: 5200,
+  },
+];

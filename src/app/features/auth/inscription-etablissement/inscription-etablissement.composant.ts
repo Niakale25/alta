@@ -1,0 +1,45 @@
+import { Component, signal, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { ROUTES_APP } from '../../../core/constantes/routes.constantes';
+
+@Component({
+  selector: 'app-inscription-etablissement',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  templateUrl: './inscription-etablissement.composant.html',
+  styleUrl: './inscription-etablissement.composant.scss',
+})
+export class InscriptionEtablissementComposant {
+  private readonly fb = inject(FormBuilder);
+  readonly routes = ROUTES_APP;
+
+  chargement = signal(false);
+  succes = signal(false);
+
+  formulaire = this.fb.group({
+    nomEtablissement: ['', [Validators.required, Validators.minLength(3)]],
+    ville: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    motDePasse: ['', [Validators.required, Validators.minLength(8)]],
+    confirmationMotDePasse: ['', [Validators.required]],
+  }, { validators: this.passwordsMatch });
+
+  private passwordsMatch(group: any) {
+    const mdp = group.get('motDePasse')?.value;
+    const conf = group.get('confirmationMotDePasse')?.value;
+    return mdp === conf ? null : { passwordMismatch: true };
+  }
+
+  async sInscrire(): Promise<void> {
+    if (this.formulaire.invalid) {
+      this.formulaire.markAllAsTouched();
+      return;
+    }
+    this.chargement.set(true);
+    await new Promise(r => setTimeout(r, 1200));
+    this.chargement.set(false);
+    this.succes.set(true);
+  }
+}

@@ -1,0 +1,42 @@
+.auth-branding--etab {
+  background: linear-gradient(145deg, #1a2f7a 0%, #314999 45%, #2d5a7a 100%);
+}
+
+.auth-check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.9);
+  font-size: var(--text-sm);
+
+  span {
+    color: #40BBCC;
+    font-weight: var(--fw-bold);
+    font-size: 16px;
+  }
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.auth-success {
+  text-align: center;
+  align-items: center;
+
+  &__icon {
+    font-size: 64px;
+  }
+}

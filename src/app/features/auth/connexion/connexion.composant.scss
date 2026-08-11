@@ -1,0 +1,414 @@
+// ── Auth Page Layout ──────────────────────────────────────────
+.auth-page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-bg-app);
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
+// ── Left Branding Panel ───────────────────────────────────────
+.auth-branding {
+  flex: 0 0 480px;
+  position: relative;
+  background: linear-gradient(145deg, #1a2f7a 0%, #314999 45%, #263a7a 70%, #1e3a5f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  @media (max-width: 1100px) {
+    flex: 0 0 400px;
+  }
+
+  @media (max-width: 900px) {
+    flex: 0 0 auto;
+    padding: 48px 32px 32px;
+  }
+}
+
+.auth-branding__inner {
+  position: relative;
+  z-index: 2;
+  padding: 48px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+
+  @media (max-width: 900px) {
+    padding: 0;
+    gap: 24px;
+  }
+}
+
+// ── Logo ──────────────────────────────────────────────────────
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__icon {
+    flex-shrink: 0;
+  }
+
+  &__name {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: var(--fw-bold);
+    color: white;
+    letter-spacing: -0.02em;
+  }
+}
+
+// ── Hero Content ──────────────────────────────────────────────
+.auth-hero {
+  &__title {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: var(--fw-extrabold);
+    color: white;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+
+    em {
+      font-style: normal;
+      color: #F1851F;
+    }
+
+    @media (max-width: 900px) {
+      font-size: 26px;
+    }
+  }
+
+  &__desc {
+    font-size: var(--text-base);
+    color: rgba(255, 255, 255, 0.75);
+    line-height: var(--lh-relaxed);
+    max-width: 360px;
+  }
+}
+
+.auth-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.auth-feature-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 100px;
+  color: white;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+
+  .pill-icon {
+    font-size: 15px;
+  }
+}
+
+// ── Stats ─────────────────────────────────────────────────────
+.auth-stats {
+  display: flex;
+  gap: 32px;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+
+.auth-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: var(--fw-bold);
+    color: white;
+    letter-spacing: -0.02em;
+  }
+
+  &__label {
+    font-size: var(--text-xs);
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: var(--fw-medium);
+  }
+}
+
+// ── Decorative Orbs ───────────────────────────────────────────
+.auth-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+
+  &--1 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(64, 187, 204, 0.25) 0%, transparent 70%);
+    top: -80px;
+    right: -80px;
+  }
+
+  &--2 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(241, 133, 31, 0.2) 0%, transparent 70%);
+    bottom: 60px;
+    left: -60px;
+  }
+
+  &--3 {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    bottom: 200px;
+    right: 20px;
+  }
+}
+
+// ── Right Form Panel ──────────────────────────────────────────
+.auth-form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 32px;
+  background: var(--color-bg-app);
+  overflow-y: auto;
+}
+
+.auth-form-container {
+  width: 100%;
+  max-width: 460px;
+}
+
+.auth-step {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+// ── Form Header ───────────────────────────────────────────────
+.auth-form-header {
+  text-align: center;
+}
+
+.auth-form-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.auth-form-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--lh-relaxed);
+}
+
+// ── Profile Cards ─────────────────────────────────────────────
+.profile-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  background: var(--color-bg-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-base);
+  width: 100%;
+
+  &:hover {
+    border-color: var(--color-primaire);
+    box-shadow: var(--shadow-lg), var(--shadow-glow-primaire);
+    transform: translateY(-2px);
+
+    .profile-card__arrow {
+      color: var(--color-primaire);
+      transform: translateX(4px);
+    }
+  }
+
+  &__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    &--etab {
+      background: var(--color-primaire-light);
+      color: var(--color-primaire);
+    }
+
+    &--parent {
+      background: var(--color-secondaire-light);
+      color: var(--color-secondaire);
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: var(--text-base);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+
+  &__desc {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    line-height: var(--lh-normal);
+  }
+
+  &__arrow {
+    color: var(--color-text-tertiary);
+    flex-shrink: 0;
+    transition: all var(--transition-base);
+  }
+}
+
+// ── Back Button ───────────────────────────────────────────────
+.auth-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-text-primary);
+  }
+}
+
+// ── Profile Badge ─────────────────────────────────────────────
+.profile-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-semibold);
+
+  &--etab {
+    background: var(--color-primaire-light);
+    color: var(--color-primaire);
+  }
+
+  &--parent {
+    background: var(--color-secondaire-light);
+    color: var(--color-secondaire);
+  }
+}
+
+// ── Form Body ─────────────────────────────────────────────────
+.auth-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.form-input-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.form-input {
+  padding-left: 40px !important;
+}
+
+.form-input-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-tertiary);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-text-secondary);
+  }
+}
+
+// ── Error Alert ───────────────────────────────────────────────
+.auth-error-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--color-danger-light);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  animation: scaleIn 0.2s ease;
+}
+
+// ── Demo Hint ─────────────────────────────────────────────────
+.auth-demo-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  padding: 8px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface-2);
+  border: 1px dashed var(--color-border);
+}
+
+// ── Form Footer ───────────────────────────────────────────────
+.auth-form-footer {
+  padding-top: 8px;
+}

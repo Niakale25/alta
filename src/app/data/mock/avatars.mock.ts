@@ -1,0 +1,78 @@
+import { AvatarPedagogique, VoixPedagogique } from '../../domain/entites/avatar-pedagogique.entite';
+import { Matiere, CategorieMatiere } from '../../core/enums';
+
+export const AVATARS_MOCK: AvatarPedagogique[] = [
+  {
+    id: 'av-1',
+    nom: 'Euler',
+    description: 'Expert en mathématiques avancées, passionné par l\'élégance des équations',
+    matiere: Matiere.MATHEMATIQUES,
+    categorie: CategorieMatiere.SCIENTIFIQUE,
+    personnalite: 'Rigoureux, patient, méthodique',
+    actif: true,
+    dateCreation: new Date('2025-01-15'),
+    utilisations: 4230,
+  },
+  {
+    id: 'av-2',
+    nom: 'Curie',
+    description: 'Spécialiste en physique-chimie, guide les apprenants vers la découverte',
+    matiere: Matiere.PHYSIQUE,
+    categorie: CategorieMatiere.SCIENTIFIQUE,
+    personnalite: 'Curieuse, enthousiaste, précise',
+    actif: true,
+    dateCreation: new Date('2025-01-15'),
+    utilisations: 3180,
+  },
+  {
+    id: 'av-3',
+    nom: 'Molière',
+    description: 'Maître de la langue française, littérature et expression écrite',
+    matiere: Matiere.FRANCAIS,
+    categorie: CategorieMatiere.LITTERAIRE,
+    personnalite: 'Éloquent, créatif, expressif',
+    actif: true,
+    dateCreation: new Date('2025-02-10'),
+    utilisations: 2870,
+  },
+  {
+    id: 'av-4',
+    nom: 'Darwin',
+    description: 'Passionné par le vivant, guide l\'exploration des sciences de la vie',
+    matiere: Matiere.SVT,
+    categorie: CategorieMatiere.SCIENTIFIQUE,
+    personnalite: 'Observateur, analytique, fasciné',
+    actif: true,
+    dateCreation: new Date('2025-02-10'),
+    utilisations: 2340,
+  },
+  {
+    id: 'av-5',
+    nom: 'Keynes',
+    description: 'Expert en économie et mathématiques financières',
+    matiere: Matiere.ECONOMIE,
+    categorie: CategorieMatiere.ECONOMIQUE,
+    personnalite: 'Stratégique, analytique, visionnaire',
+    actif: true,
+    dateCreation: new Date('2025-03-05'),
+    utilisations: 1890,
+  },
+  {
+    id: 'av-6',
+    nom: 'Mendeleïev',
+    description: 'Le maître de la chimie, de la classification périodique aux réactions complexes',
+    matiere: Matiere.CHIMIE,
+    categorie: CategorieMatiere.SCIENTIFIQUE,
+    personnalite: 'Méthodique, précis, passionné',
+    actif: false,
+    dateCreation: new Date('2025-04-20'),
+    utilisations: 920,
+  },
+];
+
+export const VOIX_MOCK: VoixPedagogique[] = [
+  { id: 'vx-1', nom: 'Amara', description: 'Voix chaude et rassurante', langue: 'fr-FR', genre: 'feminin', accent: 'Africain francophone', actif: true, dateCreation: new Date('2025-01-10'), matiereAssociee: Matiere.FRANCAIS },
+  { id: 'vx-2', nom: 'Souleymane', description: 'Voix grave et posée, idéale pour les sciences', langue: 'fr-FR', genre: 'masculin', accent: 'Africain francophone', actif: true, dateCreation: new Date('2025-01-10'), matiereAssociee: Matiere.MATHEMATIQUES },
+  { id: 'vx-3', nom: 'Lena', description: 'Voix dynamique et motivante', langue: 'fr-FR', genre: 'feminin', actif: true, dateCreation: new Date('2025-02-05') },
+  { id: 'vx-4', nom: 'Marcus', description: 'Voix neutre et claire pour une écoute optimale', langue: 'fr-FR', genre: 'masculin', actif: true, dateCreation: new Date('2025-03-12') },
+];
