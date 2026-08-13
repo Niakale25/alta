@@ -5,7 +5,7 @@ export const BOITIERS_MOCK: Boitier[] = [
   {
     id: 'boitier-1',
     codeUnique: 'ALT-2025-001',
-    nom: 'Boîtier Aminata',
+    nom: 'Boîtier Niakale',
     modele: 'Alternia Box v2',
     statut: StatutBoitier.EN_LIGNE_CLOUD,
     niveauBatterie: 87,
@@ -40,7 +40,7 @@ export const BOITIERS_MOCK: Boitier[] = [
   {
     id: 'boitier-3',
     codeUnique: 'ALT-2025-003',
-    nom: 'Boîtier Fatoumata',
+    nom: 'Boîtier Jane',
     modele: 'Alternia Box v2',
     statut: StatutBoitier.EN_LIGNE_CLOUD,
     niveauBatterie: 95,
