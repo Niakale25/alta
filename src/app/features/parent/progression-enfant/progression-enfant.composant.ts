@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Matiere, MatiereLabels, MatiereCouleurs } from '../../../core/enums';
+import { ROUTES_APP } from '../../../core/constantes/routes.constantes';
 
 interface TendanceBoitierMatiere {
   matiere: Matiere;
@@ -15,12 +17,17 @@ interface TendanceBoitierMatiere {
 @Component({
   selector: 'app-progression-enfant',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   template: `
 <div class="page-content stagger-children">
-  <div class="page-header">
-    <h1 class="page-header__title">Tendances d'utilisation du Boîtier</h1>
-    <p class="page-header__subtitle">Analyse du volume d'étude et des consultations par matière sur le dispositif ALT-HOME-0042</p>
+  <div class="page-header" style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;">
+    <div>
+      <h1 class="page-header__title">Matières Consultées</h1>
+      <p class="page-header__subtitle">Analyse détaillée du volume d'apprentissage et des questions par matière sur le boîtier</p>
+    </div>
+    <a [routerLink]="routes.PARENT.HISTORIQUE" class="btn btn-secondaire btn-sm" id="btn-ouvrir-historique-parent">
+      Voir l'historique des sessions →
+    </a>
   </div>
 
   <!-- Score global d'utilisation -->
@@ -144,6 +151,7 @@ interface TendanceBoitierMatiere {
   `],
 })
 export class ProgressionEnfantComposant {
+  readonly routes = ROUTES_APP;
   readonly MatiereLabels = MatiereLabels;
   readonly MatiereCouleurs = MatiereCouleurs;
 

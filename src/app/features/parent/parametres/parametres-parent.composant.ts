@@ -138,12 +138,8 @@ interface BoitierAssocieMock {
               <label class="form-label">Confirmation</label>
               <input type="password" class="form-input" formControlName="confirmation" placeholder="Retapez le nouveau mot de passe"/>
             </div>
-            <button type="submit" class="btn btn-danger" id="btn-changer-mdp-parent">Changer le mot de passe</button>
+            <button type="submit" class="btn btn-primary" id="btn-changer-mdp-parent">Changer le mot de passe</button>
           </form>
-          <div class="danger-zone">
-            <h3 class="fw-semibold text-sm text-danger" style="margin-bottom:12px;">Zone de danger</h3>
-            <button class="btn btn-ghost btn-sm" style="color:var(--color-danger);border:1px solid var(--color-danger);" (click)="ouvrirModalSuppression()" id="btn-supprimer-compte">Supprimer mon compte</button>
-          </div>
         </div>
       }
     </div>
@@ -170,25 +166,6 @@ interface BoitierAssocieMock {
         <div class="modal-footer" style="display:flex;justify-content:flex-end;gap:10px;">
           <button class="btn btn-ghost" (click)="fermerModalAssociation()">Annuler</button>
           <button class="btn btn-primary" (click)="validerAssociationBoitier()">Associer</button>
-        </div>
-      </div>
-    </div>
-  }
-
-  <!-- Modal Suppression -->
-  @if (modalSuppressionOuverte()) {
-    <div class="modal-overlay" (click)="fermerModalSuppression()">
-      <div class="modal-card animate-scale-in" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-          <h3 class="fw-bold text-lg text-danger">Supprimer le compte Parent</h3>
-          <button class="btn btn-ghost btn-sm btn-icon" (click)="fermerModalSuppression()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-        </div>
-        <div class="modal-body" style="padding:20px 0;">
-          <p class="text-sm text-secondary">Attention : cette action est irréversible. Toutes vos préférences de configuration seront réinitialisées.</p>
-        </div>
-        <div class="modal-footer" style="display:flex;justify-content:flex-end;gap:10px;">
-          <button class="btn btn-ghost" (click)="fermerModalSuppression()">Annuler</button>
-          <button class="btn btn-danger" (click)="confirmerSuppression()">Confirmer la suppression</button>
         </div>
       </div>
     </div>
@@ -293,18 +270,5 @@ export class ParametresParentComposant {
     this.boitiers.update(l => [...l, n]);
     this.notifService.succes('Boîtier associé', `Le boîtier ${this.codeBoitierAssocier} a été associé à votre compte.`);
     this.fermerModalAssociation();
-  }
-
-  ouvrirModalSuppression(): void {
-    this.modalSuppressionOuverte.set(true);
-  }
-
-  fermerModalSuppression(): void {
-    this.modalSuppressionOuverte.set(false);
-  }
-
-  confirmerSuppression(): void {
-    this.notifService.avertissement('Compte supprimé', 'Votre compte parent a été réinitialisé.');
-    this.fermerModalSuppression();
   }
 }

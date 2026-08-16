@@ -240,13 +240,18 @@
       <!-- Utilisation par matière -->
       <div class="card">
         <div class="card__header">
-          <h2 class="card__title">Utilisation du boîtier par matière</h2>
-          <a [routerLink]="routes.PARENT.PROGRESSION" class="btn btn-ghost btn-sm" id="btn-voir-progression">Détails →</a>
+          <div>
+            <h2 class="card__title">Matières consultées</h2>
+            <p class="card__subtitle" style="font-size:var(--text-xs);color:var(--color-text-secondary);margin:0;">
+              Répartition du temps et des questions posées sur le boîtier
+            </p>
+          </div>
+          <a [routerLink]="routes.PARENT.PROGRESSION" class="btn btn-ghost btn-sm" id="btn-voir-progression">Détails complets →</a>
         </div>
         <div class="card__body">
           <div class="matiere-progress-list">
             @for (item of dispositif.matieresConsultees; track item.matiere) {
-              <div class="matiere-progress-item">
+              <a [routerLink]="routes.PARENT.PROGRESSION" class="matiere-progress-item" style="text-decoration:none;color:inherit;cursor:pointer;display:flex;flex-direction:column;gap:6px;">
                 <div class="matiere-progress-header">
                   <div style="display:flex;align-items:center;gap:8px;">
                     <span class="matiere-dot-sm" [style.background]="MatiereCouleurs[item.matiere]"></span>
@@ -263,7 +268,7 @@
                     [style.background]="MatiereCouleurs[item.matiere]">
                   </div>
                 </div>
-              </div>
+              </a>
             }
           </div>
         </div>

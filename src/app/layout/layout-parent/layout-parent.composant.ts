@@ -30,14 +30,14 @@ export class LayoutParentComposant {
   sidebarExpanded = signal(true);
 
   readonly navItems: ParentNavItem[] = [
-    { label: 'Accueil',              route: ROUTES_APP.PARENT.TABLEAU_DE_BORD, icon: 'home'     },
-    { label: 'Profils pédagogiques', route: ROUTES_APP.PARENT.ENSEIGNANT_IA,   icon: 'bot'      },
+    { label: 'Accueil',               route: ROUTES_APP.PARENT.TABLEAU_DE_BORD,     icon: 'home'     },
+    { label: 'Profils pédagogiques',  route: ROUTES_APP.PARENT.ENSEIGNANT_IA,       icon: 'bot'      },
     { label: 'Programme de Révision', route: ROUTES_APP.PARENT.PROGRAMME_REVISION, icon: 'calendar' },
-    { label: 'Activité du Boîtier',  route: ROUTES_APP.PARENT.PROGRESSION,     icon: 'activity' },
-    { label: 'Matières Consultées',  route: ROUTES_APP.PARENT.HISTORIQUE,       icon: 'book'     },
-    { label: 'Alertes',              route: ROUTES_APP.PARENT.ALERTES,          icon: 'bell',  badge: 2 },
-    { label: 'Mon Boîtier',          route: ROUTES_APP.PARENT.BOITIER,          icon: 'cpu'      },
-    { label: 'Paramètres',           route: ROUTES_APP.PARENT.PARAMETRES,       icon: 'settings' },
+    { label: 'Matières Consultées',   route: ROUTES_APP.PARENT.PROGRESSION,         icon: 'book'     },
+    { label: 'Historique d\'Activité', route: ROUTES_APP.PARENT.HISTORIQUE,         icon: 'activity' },
+    { label: 'Alertes',               route: ROUTES_APP.PARENT.ALERTES,             icon: 'bell',  badge: 2 },
+    { label: 'Mon Boîtier',           route: ROUTES_APP.PARENT.BOITIER,             icon: 'cpu'      },
+    { label: 'Paramètres',            route: ROUTES_APP.PARENT.PARAMETRES,          icon: 'settings' },
   ];
 
   basculerSidebar(): void {

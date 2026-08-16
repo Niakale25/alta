@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Matiere, MatiereLabels, MatiereCouleurs } from '../../../core/enums';
 
@@ -12,17 +12,18 @@ import { Matiere, MatiereLabels, MatiereCouleurs } from '../../../core/enums';
     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;">
       <div>
         <h1 class="page-header__title">Historique d'activité du boîtier</h1>
-        <p class="page-header__subtitle">Sessions enregistrées sur le boîtier Maison (ALT-HOME-0042) · {{ sessions.length }} sessions ce mois</p>
+        <p class="page-header__subtitle">Sessions enregistrées sur le boîtier Maison (ALT-HOME-0042) · {{ sessionsFiltrees().length }} session(s) affichée(s)</p>
       </div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn btn-ghost btn-sm filtre-btn" [class.filtre-btn--active]="filtreActif === 'tout'" (click)="filtreActif='tout'" id="btn-hist-tout">Toutes les sessions</button>
-        <button class="btn btn-ghost btn-sm filtre-btn" [class.filtre-btn--active]="filtreActif === 'vocale'" (click)="filtreActif='vocale'" id="btn-hist-vocale">Interactions vocales</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-ghost btn-sm filtre-btn" [class.filtre-btn--active]="filtreActif() === 'tout'" (click)="filtreActif.set('tout')" id="btn-hist-tout">Toutes les sessions</button>
+        <button class="btn btn-ghost btn-sm filtre-btn" [class.filtre-btn--active]="filtreActif() === 'Vocal'" (click)="filtreActif.set('Vocal')" id="btn-hist-vocale">Interactions vocales</button>
+        <button class="btn btn-ghost btn-sm filtre-btn" [class.filtre-btn--active]="filtreActif() === 'Interactif'" (click)="filtreActif.set('Interactif')" id="btn-hist-interactif">Mode interactif</button>
       </div>
     </div>
   </div>
 
   <div class="historique-timeline">
-    @for (session of sessions; track session.id) {
+    @for (session of sessionsFiltrees(); track session.id) {
       <div class="timeline-item">
         <div class="timeline-dot" [style.border-color]="MatiereCouleurs[session.matiere]" [style.background]="MatiereCouleurs[session.matiere] + '20'"></div>
         <div class="timeline-card">
@@ -61,6 +62,8 @@ import { Matiere, MatiereLabels, MatiereCouleurs } from '../../../core/enums';
           </div>
         </div>
       </div>
+    } @empty {
+      <div class="text-sm text-secondary" style="padding:24px 0;">Aucune session trouvée pour ce filtre.</div>
     }
   </div>
 </div>
@@ -84,7 +87,7 @@ import { Matiere, MatiereLabels, MatiereCouleurs } from '../../../core/enums';
 export class HistoriqueApprentissageComposant {
   readonly MatiereLabels = MatiereLabels;
   readonly MatiereCouleurs = MatiereCouleurs;
-  filtreActif = 'tout';
+  filtreActif = signal<'tout' | 'Vocal' | 'Interactif'>('tout');
 
   readonly sessions = [
     { id: '1', date: new Date('2026-08-09T18:30:00'), matiere: Matiere.MATHEMATIQUES, duree: 45, questions: 32, mode: 'Vocal', notions: ['Intégrales par parties', 'Fonctions exponentielles'] },
@@ -94,4 +97,10 @@ export class HistoriqueApprentissageComposant {
     { id: '5', date: new Date('2026-08-06T09:00:00'), matiere: Matiere.CHIMIE, duree: 35, questions: 18, mode: 'Vocal', notions: ['Oxydoréduction', 'Titrage pH-métrique'] },
     { id: '6', date: new Date('2026-08-05T16:00:00'), matiere: Matiere.MATHEMATIQUES, duree: 60, questions: 40, mode: 'Vocal', notions: ['Probabilités conditionnelles'] },
   ];
+
+  readonly sessionsFiltrees = computed(() => {
+    const f = this.filtreActif();
+    if (f === 'tout') return this.sessions;
+    return this.sessions.filter(s => s.mode === f);
+  });
 }
