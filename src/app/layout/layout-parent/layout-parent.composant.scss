@@ -443,6 +443,11 @@
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  padding: var(--space-6);
+
+  @media (max-width: 768px) {
+    padding: var(--space-4);
+  }
 
   &::-webkit-scrollbar { width: 5px; }
   &::-webkit-scrollbar-track { background: transparent; }

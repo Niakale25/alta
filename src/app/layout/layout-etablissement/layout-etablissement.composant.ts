@@ -35,7 +35,6 @@ export class LayoutEtablissementComposant {
   /** Groupe principal — navigation courante */
   readonly navItemsPrimary: NavItem[] = [
     { label: 'Tableau de bord',      route: ROUTES_APP.ETABLISSEMENT.TABLEAU_DE_BORD, icon: 'dashboard' },
-    { label: 'Centre de pilotage',   route: ROUTES_APP.ETABLISSEMENT.PILOTAGE,         icon: 'control'   },
     { label: 'AlternIA',             route: ROUTES_APP.ETABLISSEMENT.INSIGHTS,          icon: 'insights'  },
     { label: 'Supervision Boîtiers', route: ROUTES_APP.ETABLISSEMENT.SUPERVISION_BOITIERS, icon: 'box'  },
     { label: 'Statistiques',         route: ROUTES_APP.ETABLISSEMENT.STATISTIQUES,     icon: 'stats'     },

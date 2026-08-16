@@ -13,11 +13,7 @@ export const etablissementRoutes: Routes = [
         loadComponent: () => import('./tableau-de-bord/tableau-de-bord-etablissement.composant').then(m => m.TableauDeBordEtablissementComposant),
         title: 'Tableau de bord – Alternia Établissement',
       },
-      {
-        path: 'pilotage',
-        loadComponent: () => import('./pilotage/centre-pilotage.composant').then(m => m.CentrePilotageComposant),
-        title: 'Centre de Pilotage – Alternia',
-      },
+
       {
         path: 'insights',
         loadComponent: () => import('./insights/alternia-insights.composant').then(m => m.AlternIAInsightsComposant),

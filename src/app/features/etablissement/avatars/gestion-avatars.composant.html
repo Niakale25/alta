@@ -1,0 +1,521 @@
+<div class="ga-page">
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO BANNER IMMERSIF PREMIUM
+  ════════════════════════════════════════════════════════════ -->
+  <section class="ga-hero">
+    <div class="ga-hero__glow ga-hero__glow--1"></div>
+    <div class="ga-hero__glow ga-hero__glow--2"></div>
+
+    <div class="ga-hero__content">
+      <div class="ga-hero__left">
+        <h1 class="ga-hero__title">Supervision des Avatars Pédagogiques IA</h1>
+        <p class="ga-hero__sub">
+          Gérez, personnalisez et attribuez les enseignants virtuels interactifs pour l'ensemble des établissements du réseau.
+        </p>
+      </div>
+
+      <!-- Highlight de l'avatar vedette -->
+      @if (avatarVedette(); as vedette) {
+        <div class="ga-hero__active-card">
+          <div class="ga-hero-card__header">
+            <div class="ga-hero-card__badge">
+              <span class="pulse-dot"></span>
+              <span>Avatar Vedette</span>
+            </div>
+            <span class="ga-hero-card__matiere-chip">{{ getLibelleMatiere(vedette.matiere) }}</span>
+          </div>
+
+          <div class="ga-hero-card__user">
+            <div class="ga-hero-card__avatar">
+              @if (vedette.imageUrl) {
+                <img [src]="vedette.imageUrl" [alt]="vedette.nom" />
+              } @else {
+                <span>{{ getInitiales(vedette.nom) }}</span>
+              }
+            </div>
+            <div class="ga-hero-card__meta">
+              <h4 class="ga-hero-card__nom">{{ vedette.nom }}</h4>
+              <p class="ga-hero-card__sub">{{ vedette.personnalite || 'Enseignant virtuel IA' }}</p>
+            </div>
+          </div>
+
+          @if (avatarEnLecture() === vedette.id) {
+            <div class="ga-hero-waveform-container">
+              <div class="ga-hero-waveform">
+                @for (bar of [1,2,3,4,5,6,7,8,9,10,11,12]; track bar) {
+                  <span class="ga-hero-wave-bar" [style.animation-delay]="(bar * 0.06) + 's'"></span>
+                }
+              </div>
+              <span class="ga-hero-audio-label">Lecture démo en cours…</span>
+            </div>
+          }
+
+          <button
+            class="ga-hero-card__audio-btn"
+            [class.ga-hero-card__audio-btn--playing]="avatarEnLecture() === vedette.id"
+            (click)="toggleEcouterAvatar(vedette, $event)"
+            [id]="'btn-hero-audio-' + vedette.id"
+          >
+            @if (avatarEnLecture() === vedette.id) {
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1"/>
+                <rect x="14" y="4" width="4" height="16" rx="1"/>
+              </svg>
+              <span>Arrêter l'écoute</span>
+            } @else {
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              <span>Écouter la voix de {{ vedette.nom }}</span>
+            }
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       BARRE D'ACTION & TOOLBAR
+  ════════════════════════════════════════════════════════════ -->
+  <div class="ga-toolbar">
+    <div class="ga-toolbar__left">
+      <h2 class="ga-section-title">Catalogue des Avatars</h2>
+      <span class="ga-count-chip">{{ avatars().length }} enseignants IA</span>
+    </div>
+
+    <button class="ga-btn ga-btn--primary" (click)="ouvrirModalCreation()" id="btn-creer-avatar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+      <span>Nouveau profil avatar</span>
+    </button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       GRILLE DES AVATARS PÉDAGOGIQUES (CARTE PREMIUM)
+  ════════════════════════════════════════════════════════════ -->
+  <section class="ga-grid-section">
+    @if (chargement()) {
+      <div class="ga-cards-grid">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="ga-card-skeleton"></div>
+        }
+      </div>
+    } @else {
+      <div class="ga-cards-grid">
+        @for (avatar of avatars(); track avatar.id) {
+          <div
+            class="ga-card"
+            [class.ga-card--inactif]="!avatar.actif"
+            [style.--matiere-accent]="getCouleurMatiere(avatar.matiere)"
+            [attr.id]="'card-avatar-' + avatar.id"
+          >
+            <!-- Accent top bar -->
+            <div class="ga-card__accent-bar" [style.background]="getCouleurMatiere(avatar.matiere)"></div>
+
+            <!-- Badge Statut Actif/Inactif -->
+            <div
+              class="ga-card__status-pill"
+              [class.ga-card__status-pill--active]="avatar.actif"
+              (click)="basculerStatut(avatar, $event)"
+              title="Cliquer pour activer/désactiver"
+            >
+              <span class="pulse-dot"></span>
+              <span>{{ avatar.actif ? 'Actif' : 'Inactif' }}</span>
+            </div>
+
+            <!-- Avatar Halo & Image -->
+            <div class="ga-card__avatar-wrapper">
+              <div class="ga-card__avatar-halo" [style.border-color]="getCouleurMatiere(avatar.matiere) + '80'">
+                @if (avatar.imageUrl) {
+                  <img [src]="avatar.imageUrl" [alt]="avatar.nom" class="ga-card__photo" />
+                } @else {
+                  <div class="ga-card__initiales" [style.background]="getCouleurMatiere(avatar.matiere)">
+                    {{ getInitiales(avatar.nom) }}
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Avatar Info -->
+            <div class="ga-card__info">
+              <h3 class="ga-card__nom">{{ avatar.nom }}</h3>
+              <div
+                class="ga-card__matiere-badge"
+                [style.color]="getCouleurMatiere(avatar.matiere)"
+                [style.background]="getCouleurMatiere(avatar.matiere) + '18'"
+              >
+                {{ getLibelleMatiere(avatar.matiere) }}
+              </div>
+              <p class="ga-card__desc">{{ avatar.description }}</p>
+              <div class="ga-card__personality">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <span>{{ avatar.personnalite }}</span>
+              </div>
+            </div>
+
+            <!-- Lecteur Audio (Spotify Waveform) -->
+            <div class="ga-card__audio-player">
+              <button
+                class="ga-play-btn"
+                [class.ga-play-btn--playing]="avatarEnLecture() === avatar.id"
+                [style.background]="getCouleurMatiere(avatar.matiere)"
+                (click)="toggleEcouterAvatar(avatar, $event)"
+                [attr.aria-label]="avatarEnLecture() === avatar.id ? 'Pause' : 'Écouter la voix'"
+                [id]="'btn-play-' + avatar.id"
+              >
+                @if (avatarEnLecture() === avatar.id) {
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" rx="1"/>
+                    <rect x="14" y="4" width="4" height="16" rx="1"/>
+                  </svg>
+                } @else {
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                }
+              </button>
+
+              <div class="ga-audio-waveform-wrapper">
+                <div class="ga-waveform" [class.ga-waveform--active]="avatarEnLecture() === avatar.id">
+                  @for (bar of [1,2,3,4,5,6,7,8,9,10,11,12]; track bar) {
+                    <span
+                      class="ga-waveform-bar"
+                      [style.animation-delay]="(bar * 0.07) + 's'"
+                      [style.background]="avatarEnLecture() === avatar.id ? getCouleurMatiere(avatar.matiere) : ''"
+                    ></span>
+                  }
+                </div>
+                <div class="ga-audio-progress-bar">
+                  <div
+                    class="ga-audio-progress-fill"
+                    [style.background]="getCouleurMatiere(avatar.matiere)"
+                    [style.width.%]="avatarEnLecture() === avatar.id ? tempsLecture() : 0"
+                  ></div>
+                </div>
+              </div>
+
+              <span class="ga-audio-status-label">
+                {{ avatar.utilisations.toLocaleString('fr-FR') }} sessions
+              </span>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="ga-card__footer-actions">
+              <button
+                class="ga-btn-toggle-active"
+                [class.ga-btn-toggle-active--on]="avatar.actif"
+                (click)="basculerStatut(avatar, $event)"
+                [id]="'btn-statut-' + avatar.id"
+              >
+                @if (avatar.actif) {
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  <span>Actif</span>
+                } @else {
+                  <span>Activer</span>
+                }
+              </button>
+
+              <div class="ga-card__icon-actions">
+                <button
+                  class="ga-icon-btn ga-icon-btn--edit"
+                  (click)="ouvrirModalEdition(avatar)"
+                  [id]="'btn-edit-' + avatar.id"
+                  title="Modifier l'avatar"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 20h9"/>
+                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+                  </svg>
+                </button>
+
+                <button
+                  class="ga-icon-btn ga-icon-btn--test"
+                  (click)="testerAvatar(avatar)"
+                  [id]="'btn-test-' + avatar.id"
+                  title="Aperçu vocal"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="9"/>
+                    <polygon points="10 8 16 12 10 16 10 8"/>
+                  </svg>
+                </button>
+
+                <button
+                  class="ga-icon-btn ga-icon-btn--delete"
+                  (click)="confirmerSuppression(avatar)"
+                  [id]="'btn-delete-' + avatar.id"
+                  title="Supprimer l'avatar"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        } @empty {
+          <div class="ga-empty-state">
+            <div class="ga-empty-icon">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+              </svg>
+            </div>
+            <h3>Aucun avatar pédagogique trouvé</h3>
+            <p>Créez le premier avatar d'enseignant virtuel de votre établissement.</p>
+            <button class="ga-btn ga-btn--primary" (click)="ouvrirModalCreation()">Créer un avatar</button>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODALE CREATION / EDITION AVATAR
+══════════════════════════════════════════════════════════════ -->
+@if (modalAvatarOuverte()) {
+  <div class="ga-modal-overlay" (click)="fermerModalAvatar()">
+    <div class="ga-modal" (click)="$event.stopPropagation()">
+      <div class="ga-modal__header">
+        <div class="ga-modal__title-group">
+          <div class="ga-modal-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="ga-modal__title">
+              {{ avatarEnEdition ? 'Modifier l\'avatar' : 'Créer un nouvel avatar' }}
+            </h2>
+            <span class="ga-modal__subtitle">Configurez le profil, la photo et le comportement pédagogique.</span>
+          </div>
+        </div>
+        <button class="ga-modal__close" (click)="fermerModalAvatar()" aria-label="Fermer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="ga-modal__body">
+        <!-- 1. Photo Avatar -->
+        <div class="ga-form-field">
+          <label class="ga-label">Illustration / Portrait de l'avatar</label>
+          <div class="ga-photo-upload-box">
+            <div class="ga-photo-avatar-ring">
+              @if (formImageUrl()) {
+                <img [src]="formImageUrl()" alt="Aperçu avatar" class="ga-photo-img" />
+              } @else {
+                <div class="ga-photo-placeholder">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                  </svg>
+                </div>
+              }
+            </div>
+
+            <div class="ga-photo-actions">
+              <input
+                #fileInputPhoto
+                type="file"
+                accept="image/*"
+                class="ga-hidden-input"
+                (change)="onPhotoFileSelected($event)"
+              />
+              <button class="ga-btn ga-btn--outline-sm" (click)="declencherUploadPhoto()" type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                <span>{{ formImageUrl() ? 'Changer l\'illustration' : 'Importer un portrait' }}</span>
+              </button>
+              @if (formImageUrl()) {
+                <button class="ga-btn ga-btn--danger-sm" (click)="supprimerPhotoForm()" type="button">
+                  Supprimer
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Nom -->
+        <div class="ga-form-field">
+          <label class="ga-label" for="form-nom">Nom de l'avatar *</label>
+          <input
+            id="form-nom"
+            type="text"
+            class="ga-input"
+            [ngModel]="avatarForm.nom"
+            (ngModelChange)="avatarForm.nom = $event"
+            placeholder="Ex: Soundiata / Professeur Euler"
+          />
+        </div>
+
+        <!-- 3. Matière -->
+        <div class="ga-form-field">
+          <label class="ga-label" for="form-matiere">Matière attribuée *</label>
+          <div class="ga-select-wrapper">
+            <select
+              id="form-matiere"
+              class="ga-select"
+              [ngModel]="avatarForm.matiere"
+              (ngModelChange)="avatarForm.matiere = $event"
+            >
+              @for (m of matieresList; track m) {
+                <option [value]="m">{{ MatiereLabels[m] }}</option>
+              }
+            </select>
+            <svg class="ga-select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 4. Description -->
+        <div class="ga-form-field">
+          <label class="ga-label" for="form-desc">Description du rôle *</label>
+          <textarea
+            id="form-desc"
+            class="ga-input ga-textarea"
+            rows="3"
+            [ngModel]="avatarForm.description"
+            (ngModelChange)="avatarForm.description = $event"
+            placeholder="Description concise des compétences pédagogiques..."
+          ></textarea>
+        </div>
+
+        <!-- 5. Personnalité -->
+        <div class="ga-form-field">
+          <label class="ga-label" for="form-perso">Personnalité & Ton</label>
+          <input
+            id="form-perso"
+            type="text"
+            class="ga-input"
+            [ngModel]="avatarForm.personnalite"
+            (ngModelChange)="avatarForm.personnalite = $event"
+            placeholder="Ex: Patient, rigoureux, enthousiaste"
+          />
+        </div>
+      </div>
+
+      <div class="ga-modal__footer">
+        <button class="ga-btn ga-btn--ghost" (click)="fermerModalAvatar()" type="button">Annuler</button>
+        <button
+          class="ga-btn ga-btn--primary"
+          (click)="sauvegarderAvatar()"
+          [disabled]="!avatarForm.nom.trim() || !avatarForm.description.trim()"
+          type="button"
+          id="btn-enregistrer-avatar"
+        >
+          Enregistrer l'avatar
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODALE DE TEST APERÇU VOCAL
+══════════════════════════════════════════════════════════════ -->
+@if (avatarEnTest(); as avatarTest) {
+  <div class="ga-modal-overlay" (click)="fermerTest()">
+    <div class="ga-modal ga-modal--test" (click)="$event.stopPropagation()">
+      <div class="ga-modal__header">
+        <div class="ga-modal__title-group">
+          <div class="ga-modal-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="ga-modal__title">Aperçu vocal : {{ avatarTest.nom }}</h2>
+            <span class="ga-modal__subtitle">{{ getLibelleMatiere(avatarTest.matiere) }} · {{ avatarTest.personnalite }}</span>
+          </div>
+        </div>
+        <button class="ga-modal__close" (click)="fermerTest()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="ga-modal__body ga-test-body">
+        <div class="ga-test-avatar-ring" [style.border-color]="getCouleurMatiere(avatarTest.matiere)">
+          @if (avatarTest.imageUrl) {
+            <img [src]="avatarTest.imageUrl" [alt]="avatarTest.nom" />
+          } @else {
+            <span [style.background]="getCouleurMatiere(avatarTest.matiere)">{{ getInitiales(avatarTest.nom) }}</span>
+          }
+        </div>
+
+        <p class="ga-test-quote">
+          "Bonjour ! Je suis <strong>{{ avatarTest.nom }}</strong>, votre enseignant IA en {{ getLibelleMatiere(avatarTest.matiere) }}. Prêt pour la séance d'apprentissage !"
+        </p>
+
+        <div class="ga-live-waveform">
+          @for (bar of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]; track bar) {
+            <span
+              class="ga-live-bar"
+              [style.animation-delay]="(bar * 0.06) + 's'"
+              [style.background]="getCouleurMatiere(avatarTest.matiere)"
+            ></span>
+          }
+        </div>
+      </div>
+
+      <div class="ga-modal__footer">
+        <button class="ga-btn ga-btn--primary" (click)="fermerTest()">Fermer l'aperçu</button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODALE SUPPRESSION
+══════════════════════════════════════════════════════════════ -->
+@if (avatarASupprimer(); as avatarSuppr) {
+  <div class="ga-modal-overlay" (click)="annulerSuppression()">
+    <div class="ga-modal ga-modal--confirm" (click)="$event.stopPropagation()">
+      <div class="ga-modal__header">
+        <div class="ga-modal__title-group">
+          <div class="ga-modal-icon ga-modal-icon--danger">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="ga-modal__title">Supprimer l'avatar</h2>
+            <span class="ga-modal__subtitle">Cette suppression est irréversible.</span>
+          </div>
+        </div>
+      </div>
+      <div class="ga-modal__body">
+        <p class="ga-confirm-text">
+          Êtes-vous sûr de vouloir supprimer l'avatar <strong>{{ avatarSuppr.nom }}</strong> ({{ getLibelleMatiere(avatarSuppr.matiere) }}) ?
+        </p>
+      </div>
+      <div class="ga-modal__footer">
+        <button class="ga-btn ga-btn--ghost" (click)="annulerSuppression()">Annuler</button>
+        <button class="ga-btn ga-btn--danger" (click)="validerSuppression()">Supprimer définitivement</button>
+      </div>
+    </div>
+  </div>
+}
