@@ -211,29 +211,93 @@
 
       <!-- CARTE BANNIÈRE : PROFIL PÉDAGOGIQUE ACTIF -->
       <div class="card premium-teacher-banner" style="grid-column: 1 / -1;">
+        <div class="teacher-banner-glow"></div>
         <div class="teacher-banner-inner">
-          <div class="teacher-banner-left">
-            <div class="teacher-icon-box" style="background:var(--color-primaire);">
-              @if (profilActif().photoUrl) {
-                <img [src]="profilActif().photoUrl" [alt]="profilActif().nom" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />
-              } @else {
-                <span style="font-family:var(--font-display);font-weight:800;font-size:18px;color:#ffffff;">
-                  {{ profilActif().nom.charAt(0) }}
-                </span>
-              }
+
+          <!-- Bloc gauche : Avatar & Informations structurées -->
+          <div class="teacher-banner-main">
+            <div class="teacher-avatar-container">
+              <div class="teacher-icon-box">
+                @if (profilActif().photoUrl) {
+                  <img [src]="profilActif().photoUrl" [alt]="profilActif().nom" class="teacher-photo" />
+                } @else {
+                  <span class="teacher-initials">
+                    {{ profilActif().nom.charAt(0) }}
+                  </span>
+                }
+              </div>
+              <span class="teacher-active-indicator" title="Profil actif sur le boîtier"></span>
             </div>
-            <div>
-              <span class="teacher-tag">Profil Pédagogique Actif</span>
+
+            <div class="teacher-details">
+              <div class="teacher-header-badges">
+                <span class="teacher-badge-tag">
+                  <span class="badge-dot-pulse"></span>
+                  Profil Actif sur le boîtier
+                </span>
+                <span class="teacher-subject-tag">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                  </svg>
+                  {{ profilActif().matiere }}
+                </span>
+              </div>
+
               <h3 class="teacher-name">{{ profilActif().nom }}</h3>
-              <p class="teacher-desc">Enseignant en {{ profilActif().matiere }}</p>
+              <p class="teacher-subtitle">Enseignant(e) IA référent(e) pour les explications vocales et l'assistance de votre enfant</p>
+
+              <!-- Mini grille d'informations clés -->
+              <div class="teacher-meta-grid">
+                <div class="teacher-meta-item">
+                  <span class="meta-label">Matière principale</span>
+                  <span class="meta-value">{{ profilActif().matiere }}</span>
+                </div>
+                <div class="teacher-meta-item">
+                  <span class="meta-label">Synthèse vocale</span>
+                  <span class="meta-value">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    {{ profilActif().audioFileName || 'Voix naturelle active' }}
+                  </span>
+                </div>
+                <div class="teacher-meta-item">
+                  <span class="meta-label">Disponibilité</span>
+                  <span class="meta-value text-success">
+                    <span class="status-dot-mini online"></span>
+                    100% Locale & Cloud
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="teacher-banner-right">
-            <a [routerLink]="routes.PARENT.ENSEIGNANT_IA" class="btn btn-primaire btn-sm" id="btn-personnaliser-enseignant">
-              Gérer les profils pédagogiques →
+          <!-- Bloc droit : Mini profils disponibles + Action -->
+          <div class="teacher-banner-action-col">
+            @if (autresProfils().length > 0) {
+              <div class="teacher-other-profiles">
+                <span class="other-label">Autres profils disponibles ({{ autresProfils().length }}) :</span>
+                <div class="other-avatars-row">
+                  @for (autre of autresProfils().slice(0, 3); track autre.id) {
+                    <div class="other-avatar-pill" [title]="autre.nom + ' (' + autre.matiere + ')'">
+                      <span class="other-avatar-initial">{{ autre.nom.charAt(0) }}</span>
+                      <span class="other-avatar-name">{{ autre.nom.split(' ')[1] || autre.nom }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <a [routerLink]="routes.PARENT.ENSEIGNANT_IA" class="btn btn-teacher-cta" id="btn-personnaliser-enseignant">
+              <span>Gérer les profils</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
             </a>
           </div>
+
         </div>
       </div>
 

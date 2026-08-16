@@ -55,6 +55,9 @@ export class TableauDeBordParentComposant implements OnInit {
   readonly tauxRespectPlanning = this.revisionService.tauxRespectPlanning;
   readonly profilActif = this.enseignantService.profilActif;
   readonly avatarActif = this.profilActif;
+  readonly profils = this.enseignantService.profils;
+  readonly autresProfils = computed(() => this.profils().filter(p => p.id !== this.profilActif()?.id));
+  readonly nbProfils = computed(() => this.profils().length);
 
   readonly dispositif: DispositifMock = {
     codeBoitier: 'ALT-HOME-0042',

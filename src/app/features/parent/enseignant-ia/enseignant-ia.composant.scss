@@ -24,14 +24,14 @@
    ================================================================ */
 .pp-hero {
   position: relative;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-xl);
   overflow: hidden;
-  background: linear-gradient(135deg, #1b2654 0%, #253875 100%);
+  background: linear-gradient(135deg, #16224c 0%, #203368 55%, #2a4386 100%);
   color: #ffffff;
-  padding: var(--space-7) var(--space-8);
+  padding: 34px 44px 34px 50px;
   margin-bottom: var(--space-6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 30px -4px rgba(18, 28, 68, 0.35);
 
   html.dark & {
     background: var(--color-bg-surface);
@@ -44,19 +44,19 @@
     border-radius: 50%;
     filter: blur(50px);
     pointer-events: none;
-    opacity: 0.15;
+    opacity: 0.18;
 
     &--1 {
-      width: 250px;
-      height: 250px;
+      width: 260px;
+      height: 260px;
       background: var(--color-secondaire);
       top: -80px;
       right: -30px;
     }
 
     &--2 {
-      width: 200px;
-      height: 200px;
+      width: 220px;
+      height: 220px;
       background: var(--color-innovation);
       bottom: -60px;
       left: 15%;
@@ -75,16 +75,22 @@
 
   &__left {
     flex: 1;
-    min-width: 260px;
-    max-width: 520px;
+    min-width: 280px;
+    max-width: 600px;
+    padding-left: 18px;
+
+    @media (max-width: 640px) {
+      padding-left: 0;
+      min-width: 100%;
+    }
   }
 
   &__title {
     font-family: var(--font-display);
-    font-size: clamp(22px, 2.8vw, 30px);
+    font-size: clamp(23px, 2.6vw, 31px);
     font-weight: var(--fw-extrabold);
-    line-height: 1.25;
-    margin-bottom: var(--space-3);
+    line-height: 1.28;
+    margin-bottom: 10px;
     color: #ffffff;
     letter-spacing: -0.02em;
 
@@ -95,8 +101,9 @@
 
   &__sub {
     font-size: 14px;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: var(--lh-relaxed);
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.55;
+    max-width: 540px;
 
     html.dark & {
       color: var(--color-text-secondary);
@@ -130,14 +137,14 @@
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-lg);
-  padding: 14px 16px;
-  width: 290px;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  width: 240px;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  gap: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
   flex-shrink: 0;
 
   html.dark & {
@@ -149,44 +156,44 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-2);
+    gap: 6px;
   }
 
   .pp-hero-card__badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    font-size: 10px;
+    gap: 4px;
+    font-size: 9px;
     font-weight: var(--fw-bold);
     color: #40BBCC;
     text-transform: uppercase;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.3px;
 
     html.dark & {
       color: var(--color-border-focus);
     }
 
     .pulse-dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       background: #40BBCC;
-      box-shadow: 0 0 6px #40BBCC;
+      box-shadow: 0 0 5px #40BBCC;
 
       html.dark & {
         background: var(--color-border-focus);
-        box-shadow: 0 0 6px var(--color-border-focus);
+        box-shadow: 0 0 5px var(--color-border-focus);
       }
     }
   }
 
   .pp-hero-card__matiere-chip {
-    padding: 2px 8px;
+    padding: 2px 7px;
     border-radius: var(--radius-full);
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.25);
     color: #ffffff;
-    font-size: 10px;
+    font-size: 9.5px;
     font-weight: var(--fw-semibold);
 
     html.dark & {
@@ -199,22 +206,22 @@
   .pp-hero-card__user {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     min-width: 0;
   }
 
   .pp-hero-card__avatar {
-    width: 42px;
-    height: 42px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
     overflow: hidden;
     background: rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-display);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: var(--fw-bold);
     color: #ffffff;
     flex-shrink: 0;
@@ -241,10 +248,10 @@
 
   .pp-hero-card__nom {
     font-family: var(--font-display);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: var(--fw-bold);
     color: #ffffff;
-    line-height: 1.25;
+    line-height: 1.2;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -255,8 +262,8 @@
   }
 
   .pp-hero-card__sub {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.78);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -269,10 +276,10 @@
   .pp-hero-waveform-container {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    padding: 6px 10px;
+    gap: 2px;
+    padding: 4px 8px;
     background: rgba(0, 0, 0, 0.15);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
 
     html.dark & {
       background: var(--color-bg-surface);
@@ -282,8 +289,8 @@
   .pp-hero-waveform {
     display: flex;
     align-items: center;
-    gap: 3px;
-    height: 14px;
+    gap: 2.5px;
+    height: 12px;
 
     .pp-hero-wave-bar {
       flex: 1;
@@ -299,7 +306,7 @@
   }
 
   .pp-hero-audio-label {
-    font-size: 10px;
+    font-size: 9px;
     color: rgba(255, 255, 255, 0.85);
     font-weight: var(--fw-medium);
 
@@ -312,18 +319,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 5px;
     width: 100%;
-    padding: 8px 14px;
-    border-radius: var(--radius-md);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
     background: var(--color-secondaire);
     border: none;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: var(--fw-semibold);
     cursor: pointer;
     transition: all var(--transition-fast);
-    box-shadow: 0 3px 10px rgba(241, 133, 31, 0.3);
+    box-shadow: 0 2px 8px rgba(241, 133, 31, 0.3);
 
     &:hover {
       filter: brightness(1.08);
@@ -331,8 +338,8 @@
     }
 
     &--playing {
-      background: var(--color-primaire);
-      box-shadow: 0 3px 10px rgba(49, 73, 153, 0.3);
+      background: #dc2626;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
     }
   }
 }
